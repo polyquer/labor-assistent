@@ -1,9 +1,15 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// index.html direkt ausliefern
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 const SYSTEM_PROMPT = `Du bist der Labor-Assistent von Ralf K. Röttjer – dem Labor für Neuronale Beweglichkeit (LNB) und Grey Matter Gossip (GMG).
 
@@ -89,7 +95,7 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => res.send('Labor-Assistent läuft.'));
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server läuft auf Port ${PORT}`));
